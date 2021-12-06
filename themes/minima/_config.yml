@@ -30,10 +30,10 @@ usercss: css/user.css
 footer: true
 placename: Earth
 placelink: https://en.wikipedia.org/wiki/Earth
-github: https://github.com/adisaktijrs
-linkedin: https://linkedin.com/in/adisaktijrs
-twitter: https://twitter.com/adisaktijrs
-instagram: https://instagram.com/adisaktijrs
+github: https://github.com/njustjiaweihan
+# linkedin: https://linkedin.com/in/adisaktijrs
+# twitter: https://twitter.com/adisaktijrs
+# instagram: https://instagram.com/adisaktijrs
 
 # Misc
 nanobar: /js/nanobar.min.js
@@ -50,4 +50,4 @@ article:
 
 # DISQUS comments (sign up to Disqus to get disqus_shortname)
 disqus_enabled: false
-disqus_shortname: https-adisaktijrs-github-io
+disqus_shortname: https-njustjiaweihan-github-io
