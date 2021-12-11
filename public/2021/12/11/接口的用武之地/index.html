@@ -11,11 +11,11 @@
   <meta charset="utf-8">
 
   
-  <title>Hello World</title>
+  <title>mock-consumer-helper工具包</title>
   
-  <link rel="canonical" href="http://example.com/2021/11/30/hello-world/">
+  <link rel="canonical" href="http://example.com/2021/12/11/%E6%8E%A5%E5%8F%A3%E7%9A%84%E7%94%A8%E6%AD%A6%E4%B9%8B%E5%9C%B0/">
   
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in ">
+  <meta name="description" content="跨团队合作时因为排期不同，往往需要先mock外部接口。如果项目用DDD的代码结构的话，调用外部接口的consumer类一般放在防腐层，接口的成功/失败情况都需要mock，对于失败情况需要记录日志、重试等操作，而这些代码在内部开发阶段往往重复性很高。于是有了这个mock-consumer-helper">
   
   
   <meta name="author" content="colin">
@@ -24,21 +24,21 @@
   
   <meta property="og:site_name" content="hexo" />
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="Hello World" />
+  <meta property="og:title" content="mock-consumer-helper工具包" />
   
-  <meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in ">
+  <meta property="og:description" content="跨团队合作时因为排期不同，往往需要先mock外部接口。如果项目用DDD的代码结构的话，调用外部接口的consumer类一般放在防腐层，接口的成功/失败情况都需要mock，对于失败情况需要记录日志、重试等操作，而这些代码在内部开发阶段往往重复性很高。于是有了这个mock-consumer-helper">
   
-  <meta property="og:url" content="http://example.com/2021/11/30/hello-world/" />
+  <meta property="og:url" content="http://example.com/2021/12/11/%E6%8E%A5%E5%8F%A3%E7%9A%84%E7%94%A8%E6%AD%A6%E4%B9%8B%E5%9C%B0/" />
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Hello World">
+  <meta name="twitter:title" content="mock-consumer-helper工具包">
   
-  <meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in ">
+  <meta name="twitter:description" content="跨团队合作时因为排期不同，往往需要先mock外部接口。如果项目用DDD的代码结构的话，调用外部接口的consumer类一般放在防腐层，接口的成功/失败情况都需要mock，对于失败情况需要记录日志、重试等操作，而这些代码在内部开发阶段往往重复性很高。于是有了这个mock-consumer-helper">
   
   
   <meta name="twitter:image" content="http://example.comundefined">
   
-  <meta name="twitter:url" content="http://example.com/2021/11/30/hello-world/" />
+  <meta name="twitter:url" content="http://example.com/2021/12/11/%E6%8E%A5%E5%8F%A3%E7%9A%84%E7%94%A8%E6%AD%A6%E4%B9%8B%E5%9C%B0/" />
 
   <!-- Mobile Specific Metas
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -189,23 +189,24 @@
 </div>
 
         <div class="trans">
-            <h2>Hello World</h2>
+            <h2>mock-consumer-helper工具包</h2>
 
-  <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+  <p>跨团队合作时因为排期不同，往往需要先mock外部接口。如果项目用DDD的代码结构的话，调用外部接口的consumer类一般放在防腐层，接口的成功/失败情况都需要mock，对于失败情况需要记录日志、重试等操作，而这些代码在内部开发阶段往往重复性很高。于是有了这个<code>mock-consumer-helper</code>工具包。</p>
+<span id="more"></span>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<h2 id="consumer-interface"><a href="#consumer-interface" class="headerlink" title="consumer interface"></a>consumer interface</h2><p>Api接口负责调用外部接口，并对其返回值做处理；Consumer接口记录日志、重试等通用操作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Consumer</span>&lt;<span class="title">T</span>, <span class="title">S</span>&gt;</span>&#123;</span><br><span class="line">  </span><br><span class="line">  <span class="meta">@Autowire</span></span><br><span class="line">  <span class="keyword">private</span> Api&lt;T, S&gt; api;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 打日志，重试等默认操作</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">default</span> T <span class="title">consumer</span><span class="params">(S s)</span></span>&#123;</span><br><span class="line">    T t = api.query(s);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Api</span>&lt;<span class="title">T</span>, <span class="title">S</span>&gt;</span>&#123;</span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 封装外部API的接口</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function">T <span class="title">query</span><span class="params">(S s)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<h2 id="MockConsumer"><a href="#MockConsumer" class="headerlink" title="@MockConsumer"></a>@MockConsumer</h2><p>注解的参数是mock接口的成功概率，用于模拟接口的成功/失败两种情况。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retation(RetationPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Target(ElementType.Method)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MockConsumer&#123;</span><br><span class="line">  <span class="comment">// mock的接口的成功概率</span></span><br><span class="line">  <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> &quot;0.5&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MockConsumerAspect</span></span>&#123;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * mock接口使用 概率失败</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="meta">@Around(&quot;@annotation(mockConsumer)&quot;)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Object <span class="title">around</span><span class="params">(ProcessJointPoint joinPoint, MockConsumer mockConsumer)</span></span>&#123;</span><br><span class="line">    <span class="keyword">boolean</span> flag = Math.random() &gt;= Double.parseDouble(mockConsumer.value());</span><br><span class="line">    <span class="keyword">if</span>(flag)&#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;MockConsumer ==&gt;&gt; decide fail&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    Object proceed = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">      proceed = joinPoint.preoceed();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Throwable throwable)&#123;</span><br><span class="line">      throwable.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> proceed;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-  <p> — Nov 30, 2021</p>
+<h2 id="use-case"><a href="#use-case" class="headerlink" title="use case"></a>use case</h2><p>Todo</p>
+
+  <p><a class="classtest-link" href="/tags/DIY/" rel="tag">DIY</a> — Dec 11, 2021</p>
   
 
 
