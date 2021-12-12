@@ -13,7 +13,7 @@
   
   <title>mock-consumer-helper工具包</title>
   
-  <link rel="canonical" href="http://example.com/2021/12/11/%E6%8E%A5%E5%8F%A3%E7%9A%84%E7%94%A8%E6%AD%A6%E4%B9%8B%E5%9C%B0/">
+  <link rel="canonical" href="http://example.com/2021/12/11/mock-consumer-helper/">
   
   <meta name="description" content="跨团队合作时因为排期不同，往往需要先mock外部接口。如果项目用DDD的代码结构的话，调用外部接口的consumer类一般放在防腐层，接口的成功/失败情况都需要mock，对于失败情况需要记录日志、重试等操作，而这些代码在内部开发阶段往往重复性很高。于是有了这个mock-consumer-helper">
   
@@ -28,7 +28,7 @@
   
   <meta property="og:description" content="跨团队合作时因为排期不同，往往需要先mock外部接口。如果项目用DDD的代码结构的话，调用外部接口的consumer类一般放在防腐层，接口的成功/失败情况都需要mock，对于失败情况需要记录日志、重试等操作，而这些代码在内部开发阶段往往重复性很高。于是有了这个mock-consumer-helper">
   
-  <meta property="og:url" content="http://example.com/2021/12/11/%E6%8E%A5%E5%8F%A3%E7%9A%84%E7%94%A8%E6%AD%A6%E4%B9%8B%E5%9C%B0/" />
+  <meta property="og:url" content="http://example.com/2021/12/11/mock-consumer-helper/" />
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="mock-consumer-helper工具包">
@@ -38,7 +38,7 @@
   
   <meta name="twitter:image" content="http://example.comundefined">
   
-  <meta name="twitter:url" content="http://example.com/2021/12/11/%E6%8E%A5%E5%8F%A3%E7%9A%84%E7%94%A8%E6%AD%A6%E4%B9%8B%E5%9C%B0/" />
+  <meta name="twitter:url" content="http://example.com/2021/12/11/mock-consumer-helper/" />
 
   <!-- Mobile Specific Metas
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -189,20 +189,65 @@
 </div>
 
         <div class="trans">
-            <h2>mock-consumer-helper工具包</h2>
+            <h1>mock-consumer-helper工具包</h1>
 
   <p>跨团队合作时因为排期不同，往往需要先mock外部接口。如果项目用DDD的代码结构的话，调用外部接口的consumer类一般放在防腐层，接口的成功/失败情况都需要mock，对于失败情况需要记录日志、重试等操作，而这些代码在内部开发阶段往往重复性很高。于是有了这个<code>mock-consumer-helper</code>工具包。</p>
 <span id="more"></span>
 
 <h2 id="consumer-interface"><a href="#consumer-interface" class="headerlink" title="consumer interface"></a>consumer interface</h2><p>Api接口负责调用外部接口，并对其返回值做处理；Consumer接口记录日志、重试等通用操作。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Consumer</span>&lt;<span class="title">T</span>, <span class="title">S</span>&gt;</span>&#123;</span><br><span class="line">  </span><br><span class="line">  <span class="meta">@Autowire</span></span><br><span class="line">  <span class="keyword">private</span> Api&lt;T, S&gt; api;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 打日志，重试等默认操作</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">default</span> T <span class="title">consumer</span><span class="params">(S s)</span></span>&#123;</span><br><span class="line">    T t = api.query(s);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Consumer</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token class-name">S</span><span class="token punctuation">></span></span><span class="token punctuation">&#123;</span>
+  
+  <span class="token annotation punctuation">@Autowire</span>
+  <span class="token keyword">private</span> <span class="token class-name">Api</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token class-name">S</span><span class="token punctuation">></span></span> api<span class="token punctuation">;</span>
 
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Api</span>&lt;<span class="title">T</span>, <span class="title">S</span>&gt;</span>&#123;</span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 封装外部API的接口</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function">T <span class="title">query</span><span class="params">(S s)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  <span class="token comment">/**
+   * 打日志，重试等默认操作
+   */</span>
+  <span class="token keyword">default</span> <span class="token class-name">T</span> <span class="token function">consumer</span><span class="token punctuation">(</span><span class="token class-name">S</span> s<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token class-name">T</span> t <span class="token operator">=</span> api<span class="token punctuation">.</span><span class="token function">query</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Api</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token class-name">S</span><span class="token punctuation">></span></span><span class="token punctuation">&#123;</span>
+   <span class="token comment">/**
+   * 封装外部API的接口
+   */</span>
+  <span class="token class-name">T</span> <span class="token function">query</span><span class="token punctuation">(</span><span class="token class-name">S</span> s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 
 <h2 id="MockConsumer"><a href="#MockConsumer" class="headerlink" title="@MockConsumer"></a>@MockConsumer</h2><p>注解的参数是mock接口的成功概率，用于模拟接口的成功/失败两种情况。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retation(RetationPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Target(ElementType.Method)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MockConsumer&#123;</span><br><span class="line">  <span class="comment">// mock的接口的成功概率</span></span><br><span class="line">  <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> &quot;0.5&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Documented</span>
+<span class="token annotation punctuation">@Retation</span><span class="token punctuation">(</span><span class="token class-name">RetationPolicy</span><span class="token punctuation">.</span>RUNTIME<span class="token punctuation">)</span>
+<span class="token annotation punctuation">@Target</span><span class="token punctuation">(</span><span class="token class-name">ElementType<span class="token punctuation">.</span>Method</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token annotation punctuation">@interface</span> <span class="token class-name">MockConsumer</span><span class="token punctuation">&#123;</span>
+  <span class="token comment">// mock的接口的成功概率</span>
+  <span class="token class-name">String</span> <span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token string">"0.5"</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MockConsumerAspect</span></span>&#123;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * mock接口使用 概率失败</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="meta">@Around(&quot;@annotation(mockConsumer)&quot;)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Object <span class="title">around</span><span class="params">(ProcessJointPoint joinPoint, MockConsumer mockConsumer)</span></span>&#123;</span><br><span class="line">    <span class="keyword">boolean</span> flag = Math.random() &gt;= Double.parseDouble(mockConsumer.value());</span><br><span class="line">    <span class="keyword">if</span>(flag)&#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;MockConsumer ==&gt;&gt; decide fail&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    Object proceed = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">      proceed = joinPoint.preoceed();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Throwable throwable)&#123;</span><br><span class="line">      throwable.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> proceed;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Aspect</span>
+<span class="token annotation punctuation">@Component</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MockConsumerAspect</span><span class="token punctuation">&#123;</span>
+  
+  <span class="token comment">/**
+   * mock接口使用 概率失败
+   */</span>
+  <span class="token annotation punctuation">@Around</span><span class="token punctuation">(</span><span class="token string">"@annotation(mockConsumer)"</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">around</span><span class="token punctuation">(</span><span class="token class-name">ProcessJointPoint</span> joinPoint<span class="token punctuation">,</span> <span class="token class-name">MockConsumer</span> mockConsumer<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">boolean</span> flag <span class="token operator">=</span> <span class="token class-name">Math</span><span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">>=</span> <span class="token class-name">Double</span><span class="token punctuation">.</span><span class="token function">parseDouble</span><span class="token punctuation">(</span>mockConsumer<span class="token punctuation">.</span><span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>flag<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+      <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"MockConsumer ==>> decide fail"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token class-name">Object</span> proceed <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token keyword">try</span><span class="token punctuation">&#123;</span>
+      proceed <span class="token operator">=</span> joinPoint<span class="token punctuation">.</span><span class="token function">preoceed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Throwable</span> throwable<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+      throwable<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token keyword">return</span> proceed<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
 
 <h2 id="use-case"><a href="#use-case" class="headerlink" title="use case"></a>use case</h2><p>Todo</p>
 
@@ -210,7 +255,36 @@
   
 
 
-          <div class="row mt-2">
+          <!--
+<style type="text/css">
+            body {
+                padding: 0;
+                margin: 0 auto;
+            }
+
+            #footer {
+                height: 40px;
+                line-height: 40px;
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                text-align: center;
+                background: #ffffff;
+                color: #808080;
+                font-family: Menlo;
+                font-size: 16px;
+                letter-spacing: 0px;
+            }
+
+            .content {
+                height: 1800px;
+                width: 100%;
+                text-align: center;
+            }
+</style>
+-->
+
+<div id ="footer" class="row mt-2">
   
     <div class="eight columns">
       <p id="madewith">Made with ❤ and
